@@ -107,6 +107,14 @@ public class BitString {
 		return bits.indexOf(bitstring);
 	}
 
+	/**
+	 * Returns all occurrences of the specified bit string contained in the
+	 * current bit string.
+	 *
+	 * @param bitstring
+	 *            the bitstring to find
+	 * @return a list of indices
+	 */
 	public List<Integer> findAll(final String bitstring) {
 		ArrayList<Integer> result = new ArrayList<>();
 		int index = bits.indexOf(bitstring);
@@ -133,9 +141,9 @@ public class BitString {
 	}
 
 	/**
-	 * Returns a bit string that is a substring of this bit string. The substring begins
-	 * with the character at the specified index and extends to the end of this
-	 * string.
+	 * Returns a bit string that is a substring of this bit string. The
+	 * substring begins with the character at the specified index and extends to
+	 * the end of this string.
 	 * 
 	 * @param beginIndex
 	 *            - the beginning index, inclusive.
@@ -145,25 +153,34 @@ public class BitString {
 		return new BitString(bits.substring(beginIndex));
 	}
 
+	/**
+	 * Returns the state of the bit at the specified index
+	 *
+	 * @param index
+	 *            the index
+	 * @return true for 1 and false for 0
+	 */
 	public boolean bitSet(final int index) {
 		return bits.charAt(index) == '1';
 	}
 
 	/**
-	 * Sets a bit to true (1)
-	 * 
+	 * Sets a bit to true (1).
+	 *
 	 * @param index
+	 *            the index
 	 */
 	public void setBit(final int index) {
 		this.setBit(index, true);
 	}
 
 	/**
-	 * Sets a bit to the specified value
-	 * 
+	 * Sets a bit to the specified value.
+	 *
 	 * @param index
+	 *            the index
 	 * @param value
-	 *            is true (1) or false (0)
+	 *            the value (0 or 1) to set the bit to
 	 */
 	public void setBit(final int index, final boolean value) {
 		if (index < 0 || index >= bits.length())
@@ -183,6 +200,11 @@ public class BitString {
 		return bits;
 	}
 
+	/**
+	 * Returns a byte array representing this bit string.
+	 *
+	 * @return the bit string data as byte sequence
+	 */
 	public byte[] toByteArray() {
 		byte[] result = new byte[bits.length() / 8];
 		int b_index = 0;
@@ -209,6 +231,13 @@ public class BitString {
 		return false;
 	}
 
+	/**
+	 * Converts a byte array to a (binary) string.
+	 *
+	 * @param data
+	 *            the byte data to convert
+	 * @return the binary string
+	 */
 	private String byteArrayToString(final byte[] data) {
 		StringBuilder builder = new StringBuilder();
 		StringBuilder inner = new StringBuilder();
@@ -226,6 +255,13 @@ public class BitString {
 		return builder.toString();
 	}
 
+	/**
+	 * Adds padding to the string so it corresponds to a byte (8-bit) sequence.
+	 *
+	 * @param binary
+	 *            bit sequence to add padding to
+	 * @return the string with padding
+	 */
 	private String pad(final String binary) {
 		StringBuilder b = new StringBuilder(binary);
 		while (b.length() % 8 != 0)
@@ -234,7 +270,10 @@ public class BitString {
 	}
 
 	/**
-	 * @return
+	 * Returns the length of this string. The length is equal to the number of
+	 * bits in the string
+	 * 
+	 * @return the length of the sequence of bits represented by this object.
 	 */
 	public int length() {
 		return bits.length();
