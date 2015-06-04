@@ -1,6 +1,3 @@
-/**
- * @author Dbof
- */
 package com.davidebove.bitstring;
 
 /*
