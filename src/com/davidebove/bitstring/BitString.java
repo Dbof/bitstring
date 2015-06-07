@@ -34,7 +34,7 @@ import java.util.List;
  *
  */
 public class BitString {
-	private static String REGEX_PATTERN = "^(0|1)+$";
+	private static String REGEX_PATTERN = "^[0|1]+$";
 	private String bits;
 
 	/**

@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -76,7 +77,12 @@ public class BitStringTester {
 	 * {@link de.hshn.gi.nsa.utils.BitString#BitString(java.lang.String)}.
 	 */
 	@Test
-	public final void testBitStringString() {
+	public final void testBitStringString() {	
+		// Construct big string
+		char[] charArray = new char[4096]; // in bytes
+		Arrays.fill(charArray, '0');
+		new BitString(new String(charArray)); // should not throw StackOverflowException
+		
 		BitString b = new BitString(START_PATTERN.substring(1));
 		assertEquals(bs, b);
 		assertEquals(new BitString("00000000"), new BitString("0"));
