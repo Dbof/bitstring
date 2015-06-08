@@ -26,6 +26,7 @@ package com.davidebove.bitstring;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * A mutable bit string class with easy-to-use methods for creating,
  * manipulating and analysis of binary data.
@@ -34,27 +35,38 @@ import java.util.List;
  *
  */
 public class BitString {
+
+	/** The regex pattern. */
 	private static String REGEX_PATTERN = "^[0|1]+$";
+
+	/** The bits. */
 	private String bits;
 
 	/**
-	 * Copy constructor
-	 * 
+	 * Copy constructor.
+	 *
 	 * @param bitstring
+	 *            the bitstring
 	 */
 	public BitString(final BitString bitstring) {
 		bits = bitstring.bits;
 	}
 
 	/**
-	 * Constructs a new bit string from a byte array
+	 * Constructs a new bit string from a byte array.
+	 *
+	 * @param data
+	 *            the data
 	 */
 	public BitString(final byte[] data) {
 		bits = byteArrayToString(data);
 	}
 
 	/**
-	 * Constructs a new bit string from a string
+	 * Constructs a new bit string from a string.
+	 *
+	 * @param data
+	 *            the data
 	 */
 	public BitString(final String data) {
 		if (!data.matches(REGEX_PATTERN))
@@ -63,18 +75,30 @@ public class BitString {
 	}
 
 	/**
-	 * Appends a new bit string from a byte array to the current bitstring
-	 * 
+	 * Appends a new bit string from a byte array to the current bitstring.
+	 *
 	 * @param data
+	 *            the data
 	 */
 	public void append(final byte[] data) {
 		bits = bits.concat(byteArrayToString(data));
 	}
 
 	/**
-	 * Appends a new bit string from a byte array to the current bitstring
-	 * 
+	 * Appends a new bit string from another bitstring to the current bitstring.
+	 *
 	 * @param data
+	 *            the data
+	 */
+	public void append(final BitString data) {
+		bits = bits.concat(data.bits);
+	}
+
+	/**
+	 * Appends a new bit string from a string to the current bitstring.
+	 *
+	 * @param data
+	 *            the data
 	 */
 	public void append(final String data) {
 		if (!data.matches(REGEX_PATTERN))
@@ -85,8 +109,9 @@ public class BitString {
 	/**
 	 * Returns the index within this bit string of the first occurrence of the
 	 * specified data.
-	 * 
+	 *
 	 * @param sequence
+	 *            the sequence
 	 * @return index
 	 */
 	public int find(final byte[] sequence) {
@@ -96,8 +121,9 @@ public class BitString {
 	/**
 	 * Returns the index within this bit string of the first occurrence of the
 	 * specified data.
-	 * 
+	 *
 	 * @param bitstring
+	 *            the bitstring
 	 * @return index
 	 */
 	public int find(final String bitstring) {
@@ -151,7 +177,7 @@ public class BitString {
 	}
 
 	/**
-	 * Returns the state of the bit at the specified index
+	 * Returns the state of the bit at the specified index.
 	 *
 	 * @param index
 	 *            the index
@@ -217,15 +243,59 @@ public class BitString {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bits == null) ? 0 : bits.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof BitString) {
-			BitString b = (BitString) obj;
-			return (bits.equals(b.bits));
+		if (this == obj) {
+			return true;
 		}
-		return false;
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof BitString)) {
+			return false;
+		}
+		BitString other = (BitString) obj;
+		if (bits == null) {
+			if (other.bits != null) {
+				return false;
+			}
+		} else if (!bits.equals(other.bits)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Returns the length of this string. The length is equal to the number of
+	 * bits in the string
+	 * 
+	 * @return the length of the sequence of bits represented by this object.
+	 */
+	public int length() {
+		return bits.length();
+	}
+
+	/**
+	 * Clears this bit string. Note: This is currently the only way to
+	 * completely empty a bit string.
+	 */
+	public void clear() {
+		bits = "";
 	}
 
 	/**
@@ -264,15 +334,5 @@ public class BitString {
 		while (b.length() % 8 != 0)
 			b.insert(0, '0');
 		return b.toString();
-	}
-
-	/**
-	 * Returns the length of this string. The length is equal to the number of
-	 * bits in the string
-	 * 
-	 * @return the length of the sequence of bits represented by this object.
-	 */
-	public int length() {
-		return bits.length();
 	}
 }

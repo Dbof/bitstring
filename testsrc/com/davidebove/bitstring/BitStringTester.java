@@ -77,12 +77,13 @@ public class BitStringTester {
 	 * {@link de.hshn.gi.nsa.utils.BitString#BitString(java.lang.String)}.
 	 */
 	@Test
-	public final void testBitStringString() {	
+	public final void testBitStringString() {
 		// Construct big string
 		char[] charArray = new char[4096]; // in bytes
 		Arrays.fill(charArray, '0');
-		new BitString(new String(charArray)); // should not throw StackOverflowException
-		
+		new BitString(new String(charArray)); // should not throw
+												// StackOverflowException
+
 		BitString b = new BitString(START_PATTERN.substring(1));
 		assertEquals(bs, b);
 		assertEquals(new BitString("00000000"), new BitString("0"));
@@ -105,6 +106,22 @@ public class BitStringTester {
 		int lastIndex = bs.length();
 		bs.append(sequence);
 		assertEquals(lastIndex, bs.find(sequence));
+	}
+
+	@Test
+	public final void testAppendBitString() {
+		byte[] sequence = new byte[] { 99, 33, -127 };
+		BitString b = new BitString(sequence);
+		
+		int lastIndex = bs.length();
+		bs.append(b);
+		assertEquals(lastIndex, bs.find(sequence));
+		
+		// also append bitstring to itself
+		String before = b.toString();
+		b.append(b);
+		assertEquals(2, b.findAll(before).size());
+
 	}
 
 	/**
@@ -329,4 +346,12 @@ public class BitStringTester {
 		assertNotEquals(orig, badcopy3);
 	}
 
+	@Test
+	public final void testClear() {
+		BitString cpy = new BitString(bs);
+		bs.clear();
+		assertEquals("", bs.toString());
+		bs.append(cpy);
+		assertEquals(cpy, bs);
+	}
 }
