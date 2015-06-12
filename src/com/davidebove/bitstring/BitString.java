@@ -23,10 +23,11 @@ package com.davidebove.bitstring;
  * @author Dbof <dbof@ymail.com>
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * A mutable bit string class with easy-to-use methods for creating,
  * manipulating and analysis of binary data.
@@ -34,7 +35,10 @@ import java.util.List;
  * @author Dbof
  *
  */
-public class BitString {
+public class BitString implements Serializable {
+
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8890179148412068511L;
 
 	/** The regex pattern. */
 	private static String REGEX_PATTERN = "^[0|1]+$";
@@ -53,7 +57,7 @@ public class BitString {
 	}
 
 	/**
-	 * Constructs a new bit string from a byte array.
+	 * Instantiates a new bit string from a byte array.
 	 *
 	 * @param data
 	 *            the data
@@ -63,7 +67,22 @@ public class BitString {
 	}
 
 	/**
-	 * Constructs a new bit string from a string.
+	 * Instantiates a new bit string from an integer. This can also be used to
+	 * initiate hex strings:
+	 * <p>
+	 * BitString s = new BitString(0xAABBCC);
+	 *
+	 * @param num
+	 *            the integer (or hex string)
+	 * @param pad
+	 *            true, if byte array should be padded (to 4 bytes)
+	 */
+	public BitString(final int num, final boolean pad) {
+		this(intToByteArray(num, pad));
+	}
+
+	/**
+	 * Instantiates a new bit string from a string.
 	 *
 	 * @param data
 	 *            the data
@@ -305,7 +324,7 @@ public class BitString {
 	 *            the byte data to convert
 	 * @return the binary string
 	 */
-	private String byteArrayToString(final byte[] data) {
+	private static String byteArrayToString(final byte[] data) {
 		StringBuilder builder = new StringBuilder();
 		StringBuilder inner = new StringBuilder();
 
@@ -320,6 +339,36 @@ public class BitString {
 			inner.setLength(0);
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * Int to byte array.
+	 *
+	 * @param data
+	 *            the data
+	 * @param padding
+	 *            true if byte array should be padded (to 4 bytes)
+	 * @return the byte[]
+	 */
+	private static byte[] intToByteArray(final int data, boolean padding) {
+		byte[] original = new byte[4];
+
+		original[0] = (byte) (data >> 24);
+		original[1] = (byte) (data >> 16);
+		original[2] = (byte) (data >> 8);
+		original[3] = (byte) (data);
+
+		if (!padding) {
+			int lastIndex = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (original[i] == 0)
+					lastIndex = i + 1;
+				else
+					break;
+			}
+			return Arrays.copyOfRange(original, lastIndex, 4);
+		} else
+			return original;
 	}
 
 	/**

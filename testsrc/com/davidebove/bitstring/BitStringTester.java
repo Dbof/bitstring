@@ -72,6 +72,26 @@ public class BitStringTester {
 		assertEquals(b2, b);
 	}
 
+	@Test
+	public void testBitStringInt() {
+		BitString number = new BitString(258, false);
+		BitString binary = new BitString("0000000100000010"); // 4 bytes
+		assertEquals(binary, number);
+
+		// test padding
+		number = new BitString(258, true);
+		binary = new BitString("00000000000000000000000100000010");
+		assertEquals(binary, number);
+
+		// hex numbers
+		number = new BitString(0x102, false); // == 258
+		assertEquals(binary, number);
+
+		number = new BitString(-2, false);
+		assertEquals(new BitString("11111111111111111111111111111110"), number);
+
+	}
+
 	/**
 	 * Test method for
 	 * {@link de.hshn.gi.nsa.utils.BitString#BitString(java.lang.String)}.
@@ -112,11 +132,11 @@ public class BitStringTester {
 	public final void testAppendBitString() {
 		byte[] sequence = new byte[] { 99, 33, -127 };
 		BitString b = new BitString(sequence);
-		
+
 		int lastIndex = bs.length();
 		bs.append(b);
 		assertEquals(lastIndex, bs.find(sequence));
-		
+
 		// also append bitstring to itself
 		String before = b.toString();
 		b.append(b);
