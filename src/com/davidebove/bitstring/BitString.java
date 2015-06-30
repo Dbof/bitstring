@@ -29,8 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A mutable bit string class with easy-to-use methods for creating,
- * manipulating and analysis of binary data.
+ * A mutable bit string class with easy-to-use methods for creation,
+ * manipulation and analysis of binary data.
  * 
  * @author Dbof
  *
