@@ -44,7 +44,7 @@ public class BitString implements Serializable {
 	private static String REGEX_PATTERN = "^[0|1]+$";
 
 	/** The bits. */
-	private String bits;
+	protected String bits;
 
 	/**
 	 * Copy constructor.
@@ -70,7 +70,7 @@ public class BitString implements Serializable {
 	 * Instantiates a new bit string from an integer. This can also be used to
 	 * initiate hex strings:
 	 * <p>
-	 * BitString s = new BitString(0xAABBCC);
+	 * BitString s = new BitString(0xAABBCC, true);
 	 *
 	 * @param num
 	 *            the integer (or hex string)
@@ -123,6 +123,21 @@ public class BitString implements Serializable {
 		if (!data.matches(REGEX_PATTERN))
 			throw new IllegalArgumentException("String is not a bit string!");
 		bits = bits.concat(pad(data));
+	}
+
+	/**
+	 * Appends a new bit string from an integer. This can also be used to append
+	 * hex strings:
+	 * <p>
+	 * s.append(0xAABBCC, true);
+	 *
+	 * @param num
+	 *            the integer (or hex string)
+	 * @param pad
+	 *            true, if byte array should be padded (to 4 bytes)
+	 */
+	public void append(final int num, final boolean pad) {
+		bits = bits.concat(byteArrayToString(intToByteArray(num, pad)));
 	}
 
 	/**
