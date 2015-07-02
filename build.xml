@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bitstring.makejar" default="jar" basedir=".">
+
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac includeantruntime="false" srcdir="src" destdir="bin" />
+	</target>
+
+	<target name="jar" depends="compile" description="Create a jar for the bitstring project">
+		<mkdir dir="build" />
+		<jar destfile="build/bitstring.jar" basedir="bin" update="true">
+		</jar>
+	</target>
+
+	<target name="jar-with-source" depends="compile" description="Create a jar with source for the bitstring project">
+		<jar destfile="build/bitstring-with-source.jar" basedir="bin" update="true">
+			<fileset dir="src" includes="**/*.java" />
+			<fileset file="README.md" />
+			<fileset file="LICENSE" />
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+</project>
